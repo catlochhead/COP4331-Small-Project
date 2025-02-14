@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --color1: #f9c48b2f;
+    --color2: #ebeae8;
+    --color3: #f1cca5b7;
+    --color4: #aa5c52;
+    --color5: #583730;
+    --color6: #fefcfc;
+
+    font-family: "Commissioner", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    right: 0;
+}
+
+.user-menu:hover .dropdown-menu {
+    display: block;
+}
+
+.search-container {
+    margin-top: 100px;
+    width: 60%;
+    padding: 10px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    align-items: left;
+}
+
+#add-contact-btn {
+    margin: 20px;
+    padding: 10px 15px;
+    font-size: 24px;
+    border: none;
+    border-radius: 50%;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.contact-form-container, .contact-details {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    text-align: center;
+    background-color: #f9f9f9;
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.contacts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+    width: 80%;
+}
+
+.contact-card {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}

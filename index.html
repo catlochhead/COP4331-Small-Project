@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js" defer></script>
+    <script type="text/javascript" src="js/md5.js"></script>
+    <script type="text/javascript" src="js/code.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <title>Contacts Manager</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="input-box register">
+            <h1>Register</h1>
+            <form action="" method="post">
+                <div class="fullname">
+                    <input type="text" id="first-name" name="first-name" placeholder="First Name" required>
+                    <input type="text" id="last-name" name="last-name" placeholder="Last Name" required>
+                </div>
+                <div>
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <i data-feather="user"></i>
+                </div>
+                <div>
+                    <input class="pw-field-reg" type="password" id="password" name="password" placeholder="Password" required>
+                    <i class="pw-svg-reg" data-feather="eye"></i>
+                </div>
+                <button type="button" onclick="signUp();">Register</button>
+                <p id="signupResult"></p>
+            </form>
+        </div>
+    
+        <div class="input-box login">
+            <h1>Login</h1>
+            <form action="" method="get">
+                <div>
+                    <input type="text" id="username-login" name="username" placeholder="Username" required>
+                    <i data-feather="user"></i>
+                </div>
+                <div>
+                    <input class="pw-field-log" type="password" id="password-login" name="password" placeholder="Password" required>
+                    <i class="pw-svg-log" data-feather="eye"></i>
+                </div>
+                <button type="button" onclick="doLogin();">Login</button>
+                <p id="loginResult"></p>
+            </form>
+        </div>
+
+        <div class="slider">
+            <div class="welcome">
+                <h1>Welcome to Contacts Manager!</h1>
+                <p>Don't have an account?</p>
+                <button class="slider-register-btn">Register</button>
+            </div>
+
+            <div class="welcome-back">
+                <h1>Welcome Back!</h1>
+                <p>Already have an account?</p>
+                <button class="slider-login-btn">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+    </script>
+</body> 
+</html>

@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const firstNameInput = document.getElementById("first-name");
     const lastNameInput = document.getElementById("last-name");
     const contactIcon = document.getElementById("contact-icon");
+    
 
     // Toggle contact form visibility
     addContactBtn.addEventListener("click", function () {
@@ -53,9 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 contenteditable="false">Placeholder Contact ${i}</h3>
                 <p>Email: <span contenteditable="false">placeholder${i}@example.com</span></p>
                 <p>Phone: <span contenteditable="false">123-456-789${i}</span></p>
-                <button class="edit-contact">Edit</button>
-                <button class="delete-contact">Delete</button>
-                <button class="save-contact" style="display:none">Save</button>
+                <button class="edit-contact" style="color:var(--color2)">Edit</button>
+                <button class="delete-contact" style="color:var(--color2)">Delete</button>
+                <button class="save-contact style="color:var(--color2)" style="display:none">Save</button>
             `;
             contactsGrid.appendChild(placeholder);
         }
@@ -163,23 +164,51 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     }); */
+    function updateIcon() {
+        const firstName = firstNameInput.value.trim();
+        const lastName = lastNameInput.value.trim();
+        let initials = "";
 
+        if (firstName) initials += firstName.charAt(0).toUpperCase();
+        if (lastName) initials += lastName.charAt(0).toUpperCase();
 
-    contactsGrid.addEventListener("click", function (event) {
-        const card = event.target.closest(".contact-card");
-        if (!card) return;
-        
-        const name = card.querySelector("h3").textContent;
-        const email = card.querySelector("p:nth-of-type(1) span").textContent;
-        const phone = card.querySelector("p:nth-of-type(2) span").textContent;
-        
-        let initials = name.split(" ").map(n => n[0]).join("").toUpperCase();
+        contactIcon.textContent = initials || "?"; // Default to "?" if empty
+    }
+
+    firstNameInput.addEventListener("input", updateIcon);
+    lastNameInput.addEventListener("input", updateIcon);
+
+    contactsGrid.addEventListener("click", function (e) {
+        const target = e.target;
+        if (target.classList.contains("edit-contact") || target.classList.contains("delete-contact") || target.classList.contains("save-contact")) {
+            return; // Prevent popup from opening when clicking these buttons
+        }
+        const contactCard = target.closest(".contact-card");
+        if (!contactCard) return;
+
+        const name = contactCard.querySelector("h3").textContent;
+        const email = contactCard.querySelector("p:nth-of-type(1) span").textContent;
+        const phone = contactCard.querySelector("p:nth-of-type(2) span").textContent;
+
+        const nameParts = name.split(" ");
+        let initials = "";
+        if (nameParts.length > 0) initials += nameParts[0].charAt(0).toUpperCase();
+        if (nameParts.length > 1) initials += nameParts[1].charAt(0).toUpperCase();
+
         popupIcon.textContent = initials || "?";
         popupName.textContent = name;
         popupEmail.textContent = email;
         popupPhone.textContent = phone;
-        
+
         contactPopup.style.display = "block";
+    });
+
+    editContactBtn.addEventListener("click", function () {
+        popupName.contentEditable = "true";
+        popupEmail.contentEditable = "true";
+        popupPhone.contentEditable = "true";
+        editContactBtn.style.display = "none";
+        saveContactBtn.style.display = "inline";
     });
 
     

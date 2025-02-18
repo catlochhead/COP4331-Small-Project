@@ -11,12 +11,12 @@
         <div class="header-content">
             <h1>Contact Manager</h1>
             <div class="user-menu">
-                <button>
-                <div class="dropdown-menu">
+                <button id="user-button">User ⌄</button>
+                <div class="dropdown-menu" id="dropdown-menu">
                     <button id="sign-out">Sign Out</button>
                 </div>
-                </button>
             </div>
+            
         </div>
     </header>
     <div class="second-header-content">
@@ -28,12 +28,19 @@
     
     
     <div class="contact-form-container" id="contact-form">
-        <h2>Add Contact</h2>
+        <div class="form-header">
+            <div class="contact-icon" id="contact-icon">?</div>
+            <h2>Add Contact</h2>
+            <span class="close-btn" id="close-form">&times;</span>
+        </div>
         <form id="contact-form-element">
-            <input type="text" id="name" placeholder="Name">
+            <div class="name-fields">
+                <input type="text" id="first-name" placeholder="First Name">
+                <input type="text" id="last-name" placeholder="Last Name">
+            </div>
             <input type="email" id="email" placeholder="Email">
             <input type="tel" id="phone" placeholder="Phone">
-            <button type="submit">Add Contact</button>
+            <button id="submit">Add Contact</button>
         </form>
     </div>
     
@@ -49,6 +56,17 @@
         <div class="contact-card" data-contact="Contact 8">Contact 8</div>
         <div class="contact-card" data-contact="Contact 9">Contact 9</div>
         <div class="contact-card" data-contact="Contact 10">Contact 9</div>
+    </div>
+    <div class="contact-popup" id="contact-popup">
+        <div class="popup-header">
+            <div class="contact-popup-icon" id="popup-icon">?</div>
+            <h2 id="popup-name">Contact Name</h2>
+            <span class="close-btn" id="close-popup">&times;</span>
+        </div>
+        <div class="popup-body">
+            <p><strong>Email:</strong> <span id="popup-email"></span></p>
+            <p><strong>Phone:</strong> <span id="popup-phone"></span></p>
+        </div>
     </div>
     <div class="pagination">
         <button id="prev-page">Previous</button>

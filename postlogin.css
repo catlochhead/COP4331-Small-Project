@@ -33,7 +33,7 @@ header {
     align-items: center;
     width: 80%;
     margin: 0 auto;
-    color: var(--color5);
+    color: var(--color2);
 }
 .second-header-content {
     opacity: 1;
@@ -46,26 +46,48 @@ header {
 }
 .user-menu {
     position: relative;
+    display: inline-block;
 }
-.user-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+
+#user-button {
+    background: var(--color1);
+    color: white;
+    border: none;
+    padding: 10px 15px;
     cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
 }
+
+#user-button:hover {
+    background: var(--color2); /* Adjust this to a suitable hover color */
+}
+
 .dropdown-menu {
     display: none;
     position: absolute;
-    background: white;
+    background: var(--color1);
     border: 1px solid var(--color1);
     padding: 10px;
     right: 0;
-    color: var(--color1);
-    background-color: var(--color1);
+    color: white;
+    border-radius: 5px;
+    min-width: 120px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
-.user-menu:hover .dropdown-menu {
-    display: block;
-    color: var(--color1);
+
+.dropdown-menu button {
+    background: none;
+    border: none;
+    color: white;
+    width: 100%;
+    padding: 8px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+    background: var(--color2);
 }
 .search-container {
     opacity: 1;
@@ -77,44 +99,101 @@ header {
     opacity: 1;
     width: 30%;
     padding: 10px;
-    border: 1px solid #ccc;
+    background-color: var(--color3); 
+    border: 1px solid var(--color4);
     border-radius: 5px;
     align-items: left;
 }
 #add-contact-btn {
     opacity: 1;
-    margin: 20px;
+    width: 30%;
+    border-radius: 5px;
     margin-top: 150px;
     font-size: 24px;
     border: none;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     background-color: var(--color4);
     color: var(--color6);
     cursor: pointer;
     align-items: right;
 }
-.contact-form-element {
-    background-color: var(--color1);
-    opacity: 1;
-}
-.contact-form-container, .contact-form {
-    opacity: 1;
-    background-color: var(--color1);
+.contact-form-container {
     display: none;
-    color: var(--color5);
+    background-color: var(--color4);
+    color: var(--color2);
     margin-top: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 40%;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    width: 50%;
+    max-width: 500px;
     text-align: center;
-    background-color: var(--color1);
     position: absolute;
-    top: 150px;
+    top: 100px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
 }
+
+/* Form Header with Icon & Close Button */
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--color2);
+    color: var(--color6);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: auto;
+}
+
+/* Close Button */
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--color6);
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/* Input Fields */
+.name-fields {
+    display: flex;
+    gap: 10px;
+}
+
+.name-fields input {
+    width: 50%;
+}
+
+.contact-form-container input,
+.contact-form-container button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+#submit {
+    background-color: var(--color2);
+    color: var(--color6);
+    font-size: 18px;
+    cursor: pointer;
+}
+
 .contacts-grid {
     opacity: 1;
     border-radius: 40px;
@@ -138,6 +217,61 @@ header {
     text-align: center;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+}
+.contact-popup {
+    display: none;
+    background-color: var(--color4);
+    color: var(--color2);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    width: 50%;
+    max-width: 500px;
+    text-align: center;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* Popup Header */
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.contact-popup-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--color2);
+    color: var(--color6);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: auto;
+}
+
+/* Close Button */
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--color6);
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/* Popup Body */
+.popup-body p {
+    font-size: 18px;
+    margin: 10px 0;
 }
 .pagination {
     text-align: center;
@@ -166,4 +300,7 @@ header {
 .pagination button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+.submit button {
+    background-color: var(--color3);
 }

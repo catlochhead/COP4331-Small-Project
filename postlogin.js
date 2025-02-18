@@ -1,18 +1,49 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Contact Manager Loaded");
+
+    // DOM Elements
     const addContactBtn = document.getElementById("add-contact-btn");
     const contactForm = document.getElementById("contact-form");
     const contactFormElement = document.getElementById("contact-form-element");
     const searchInput = document.getElementById("search-input");
     const contactsGrid = document.querySelector(".contacts-grid");
+    const userButton = document.getElementById("user-button");
+    const dropdownMenu = document.getElementById("dropdown-menu");
+    const contactPopup = document.getElementById("contact-popup");
+    const popupIcon = document.getElementById("popup-icon");
+    const popupName = document.getElementById("popup-name");
+    const popupEmail = document.getElementById("popup-email");
+    const popupPhone = document.getElementById("popup-phone");
+    const closePopupBtn = document.getElementById("close-popup");
+    const closeFormBtn = document.getElementById("close-form");
+    const firstNameInput = document.getElementById("first-name");
+    const lastNameInput = document.getElementById("last-name");
+    const contactIcon = document.getElementById("contact-icon");
+
     // Toggle contact form visibility
     addContactBtn.addEventListener("click", function () {
-        console.log("Toggling contact form");
         contactForm.style.display = contactForm.style.display === "none" || contactForm.style.display === "" ? "block" : "none";
     });
-    // Display placeholders if fetch fails or contacts are empty
+
+    // Close form when X is clicked
+    closeFormBtn.addEventListener("click", function () {
+        contactForm.style.display = "none";
+    });
+
+    // Handle user dropdown menu
+    userButton.addEventListener("click", function (event) {
+        dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+        event.stopPropagation();
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!userButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.style.display = "none";
+        }
+    });
+
+    // Display placeholder contacts
     function displayPlaceholders() {
-        console.log("Displaying placeholders...");
         contactsGrid.innerHTML = "";
         for (let i = 1; i <= 9; i++) {
             const placeholder = document.createElement("div");
@@ -29,91 +60,23 @@ document.addEventListener("DOMContentLoaded", function () {
             contactsGrid.appendChild(placeholder);
         }
     }
-    // Fetch and display contacts (hidden for now, will use in production)
-    async function fetchContacts() {
-        /*
-        try {
-            console.log("Fetching contacts...");
-            const response = await fetch("retrieve.php");
-            if (!response.ok) throw new Error(`Failed to fetch contacts: ${response.status}`);
-            const contacts = await response.json();
-            console.log("Contacts fetched:", contacts);
-            contactsGrid.innerHTML = "";
-            if (contacts.length === 0) {
-                console.log("No contacts found. Displaying placeholders.");
-                displayPlaceholders(); // TODO: Remove this in production
-            } else {
-                contacts.forEach(contact => {
-                    const contactCard = document.createElement("div");
-                    contactCard.classList.add("contact-card");
-                    contactCard.dataset.id = contact.id;
-                    contactCard.innerHTML = `
-                        <h3 contenteditable="false">${contact.name}</h3>
-                        <p>Email: <span contenteditable="false">${contact.email}</span></p>
-                        <p>Phone: <span contenteditable="false">${contact.phone}</span></p>
-                        <button class="edit-contact">Edit</button>
-                        <button class="delete-contact">Delete</button>
-                        <button class="save-contact" style="display:none">Save</button>
-                    `;
-                    contactsGrid.appendChild(contactCard);
-                });
-            }
-        } catch (error) {
-            console.error("Error fetching contacts:", error);
-            displayPlaceholders(); // TODO: Remove this in production
-        }
-        */
-        // For testing: display placeholders
-        console.log("Skipping fetch and displaying placeholders for testing.");
-        displayPlaceholders();
-    }
-    // Add a contact (hidden for now, will use in production)
-    contactFormElement.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
-        const phone = document.getElementById("phone").value;
-        if (!name || !email || !phone) {
-            alert("All fields are required to add a contact.");
-            return;
-        }
-        console.log("Adding contact:", { name, email, phone });
-        /*
-        try {
-            const response = await fetch("create.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, phone })
-            });
-            if (!response.ok) throw new Error(`Failed to add contact: ${response.status}`);
-            console.log("Contact added successfully");
-            contactFormElement.reset();
-            contactForm.style.display = "none";
-            fetchContacts();
-        } catch (error) {
-            console.error("Error adding contact:", error);
-            alert("Failed to add contact. Please try again.");
-        }
-        */
-        // For testing: Add a placeholder contact locally
-        const placeholderCount = contactsGrid.querySelectorAll(".contact-card").length;
-        const newPlaceholder = document.createElement("div");
-        newPlaceholder.classList.add("contact-card");
-        newPlaceholder.dataset.id = `placeholder-${placeholderCount + 1}`;
-        newPlaceholder.innerHTML = `
-            <h3 contenteditable="false">${name}</h3>
-            <p>Email: <span contenteditable="false">${email}</span></p>
-            <p>Phone: <span contenteditable="false">${phone}</span></p>
-            <button class="edit-contact">Edit</button>
-            <button class="delete-contact">Delete</button>
-            <button class="save-contact" style="display:none">Save</button>
-        `;
-        contactsGrid.appendChild(newPlaceholder);
-        contactFormElement.reset();
-        contactForm.style.display = "none";
+    
+    // Initial fetch
+    displayPlaceholders();
+
+    // Search contacts
+    searchInput.addEventListener("input", function () {
+        const query = searchInput.value.toLowerCase();
+        const contactCards = contactsGrid.querySelectorAll(".contact-card");
+        contactCards.forEach(card => {
+            const name = card.querySelector("h3").textContent.toLowerCase();
+            card.style.display = name.includes(query) ? "block" : "none";
+        });
     });
-    // Handle edit and delete actions
-    contactsGrid.addEventListener("click", async function (e) {
+
+    // Show popup when a contact card is clicked
+    //previous code, may be useful for functionality later
+    /* contactsGrid.addEventListener("click", async function (e) {
         const target = e.target;
         const contactCard = target.closest(".contact-card");
         console.log("Clicked element:", target);
@@ -154,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (contactId.startsWith("placeholder-")) {
                 console.log("Updated placeholder contact locally.");
             } else {
-                /*
+                
                 try {
                     const response = await fetch("update.php", {
                         method: "POST",
@@ -172,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.error("Error updating contact:", error);
                     alert("Failed to update contact. Please try again.");
                 }
-                */
+                
             }
         } else if (target.classList.contains("delete-contact")) {
             console.log("Delete button clicked for:", contactId);
@@ -181,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.log("Deleting placeholder contact locally.");
                     contactCard.remove();
                 } else {
-                    /*
+                    
                     try {
                         const response = await fetch("delete.php", {
                             method: "POST",
@@ -195,23 +158,130 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.error("Error deleting contact:", error);
                         alert("Failed to delete contact. Please try again.");
                     }
-                    */
+                    
                 }
             }
         }
+    }); */
+
+
+    contactsGrid.addEventListener("click", function (event) {
+        const card = event.target.closest(".contact-card");
+        if (!card) return;
+        
+        const name = card.querySelector("h3").textContent;
+        const email = card.querySelector("p:nth-of-type(1) span").textContent;
+        const phone = card.querySelector("p:nth-of-type(2) span").textContent;
+        
+        let initials = name.split(" ").map(n => n[0]).join("").toUpperCase();
+        popupIcon.textContent = initials || "?";
+        popupName.textContent = name;
+        popupEmail.textContent = email;
+        popupPhone.textContent = phone;
+        
+        contactPopup.style.display = "block";
     });
-    // Search contacts
-    searchInput.addEventListener("input", function () {
-        const query = searchInput.value.toLowerCase();
-        const contactCards = contactsGrid.querySelectorAll(".contact-card");
-        contactCards.forEach(card => {
-            const name = card.querySelector("h3").textContent.toLowerCase();
-            card.style.display = name.includes(query) ? "block" : "none";
-        });
-    });
+
     
-    // Initial fetch
-    fetchContacts();
+    // Close popup when X is clicked
+    closePopupBtn.addEventListener("click", function () {
+        contactPopup.style.display = "none";
+    });
+
+    // Update initials in icon when entering first and last name
+    function updateIcon() {
+        let initials = "";
+        if (firstNameInput.value) initials += firstNameInput.value.charAt(0).toUpperCase();
+        if (lastNameInput.value) initials += lastNameInput.value.charAt(0).toUpperCase();
+        contactIcon.textContent = initials || "?";
+    }
+
+    firstNameInput.addEventListener("input", updateIcon);
+    lastNameInput.addEventListener("input", updateIcon);
 
 
+    /* contact fetch
+    async function fetchContacts() {
+        
+        try {
+            console.log("Fetching contacts...");
+            const response = await fetch("retrieve.php");
+            if (!response.ok) throw new Error(`Failed to fetch contacts: ${response.status}`);
+            const contacts = await response.json();
+            console.log("Contacts fetched:", contacts);
+            contactsGrid.innerHTML = "";
+            if (contacts.length === 0) {
+                console.log("No contacts found. Displaying placeholders.");
+                displayPlaceholders(); // TODO: Remove this in production
+            } else {
+                contacts.forEach(contact => {
+                    const contactCard = document.createElement("div");
+                    contactCard.classList.add("contact-card");
+                    contactCard.dataset.id = contact.id;
+                    contactCard.innerHTML = `
+                        <h3 contenteditable="false">${contact.name}</h3>
+                        <p>Email: <span contenteditable="false">${contact.email}</span></p>
+                        <p>Phone: <span contenteditable="false">${contact.phone}</span></p>
+                        <button class="edit-contact">Edit</button>
+                        <button class="delete-contact">Delete</button>
+                        <button class="save-contact" style="display:none">Save</button>
+                    `;
+                    contactsGrid.appendChild(contactCard);
+                });
+            }
+        } catch (error) {
+            console.error("Error fetching contacts:", error);
+            displayPlaceholders(); // TODO: Remove this in production
+        }
+        
+        // For testing: display placeholders
+        console.log("Skipping fetch and displaying placeholders for testing.");
+        displayPlaceholders();
+    }
+
+    // Add a contact (hidden for now, will use in production)
+    contactFormElement.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        if (!name || !email || !phone) {
+            alert("All fields are required to add a contact.");
+            return;
+        }
+        console.log("Adding contact:", { name, email, phone });
+        
+        try {
+            const response = await fetch("create.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, phone })
+            });
+            if (!response.ok) throw new Error(`Failed to add contact: ${response.status}`);
+            console.log("Contact added successfully");
+            contactFormElement.reset();
+            contactForm.style.display = "none";
+            fetchContacts();
+        } catch (error) {
+            console.error("Error adding contact:", error);
+            alert("Failed to add contact. Please try again.");
+        }
+        
+        // For testing: Add a placeholder contact locally
+        const placeholderCount = contactsGrid.querySelectorAll(".contact-card").length;
+        const newPlaceholder = document.createElement("div");
+        newPlaceholder.classList.add("contact-card");
+        newPlaceholder.dataset.id = `placeholder-${placeholderCount + 1}`;
+        newPlaceholder.innerHTML = `
+            <h3 contenteditable="false">${name}</h3>
+            <p>Email: <span contenteditable="false">${email}</span></p>
+            <p>Phone: <span contenteditable="false">${phone}</span></p>
+            <button class="edit-contact">Edit</button>
+            <button class="delete-contact">Delete</button>
+            <button class="save-contact" style="display:none">Save</button>
+        `;
+        contactsGrid.appendChild(newPlaceholder);
+        contactFormElement.reset();
+        contactForm.style.display = "none";
+    }); */
 });

@@ -11,21 +11,20 @@
         <div class="header-content">
             <h1>Contact Manager</h1>
             <div class="user-menu">
-                <button id="user-button">User ⌄</button>
-                <div class="dropdown-menu" id="dropdown-menu">
-                    <button id="sign-out">Sign Out</button>
-                </div>
-            </div>
-            
+                <button id="user-button"></button>
+                
+                <button id="sign-out">Sign Out</button>
+    
+            </div>   
         </div>
     </header>
     <div class="second-header-content">
         <div class="search-container">
             <input type="text" id="search-input" placeholder="Search contacts...">
+            <button id="search-button">Search</button>
         </div>
-        <button id="add-contact-btn">Add Contact + </button>
-    </div> 
-    
+        <button id="add-contact-btn">Add Contact +</button>
+    </div>
     
     <div class="contact-form-container" id="contact-form">
         <div class="form-header">
@@ -39,7 +38,7 @@
             </div>
             <input type="email" style="color:var(--color5)" id="email" placeholder="Email">
             <input type="tel" style="color:var(--color5)" id="phone" placeholder="Phone">
-            <button id="submit" style="color:var(--color6)">Add Contact</button>
+            <button id="submit">Add Contact</button>
         </form>
     </div>
     
@@ -60,7 +59,7 @@
         <div class="popup-header">
             <div class="contact-popup-icon" id="popup-icon">?</div>
             <h2 id="popup-name">Contact Name</h2>
-            <span class="close-btn" id="close-popup">&times;</span>
+            <span class="close-btn" id="close-form">&times;</span>
         </div>
         <div class="popup-body">
             <p><strong>Email:</strong> <span id="popup-email"></span></p>

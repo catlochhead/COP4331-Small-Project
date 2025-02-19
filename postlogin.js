@@ -30,6 +30,13 @@ document.addEventListener("DOMContentLoaded", function () {
     closeFormBtn.addEventListener("click", function () {
         contactForm.style.display = "none";
     });
+    
+    if (closeFormBtn && contactForm) {
+        closeFormBtn.addEventListener("click", function () {
+            // Hide the contact form when the close button is clicked
+            contactForm.style.display = "none";
+        });
+    }
 
     // Handle user dropdown menu
     userButton.addEventListener("click", function (event) {
